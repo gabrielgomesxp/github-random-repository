@@ -1,38 +1,60 @@
 const fs = require('fs');
 const path = require('path');
+const { TextEncoder, TextDecoder } = require('util');
 
-// No Jest com testEnvironment: 'jsdom', o 'document' já é global.
-// Só precisamos carregar o HTML para dentro dele.
+global.TextEncoder = TextEncoder;
+global.TextDecoder = TextDecoder;
+
+const { JSDOM } = require('jsdom');
 const htmlPath = path.join(process.cwd(), 'index.html');
 const html = fs.readFileSync(htmlPath, 'utf8');
 
-describe('App Logic - State Management', () => {
+describe('App Logic - API Integration', () => {
     let app;
 
     beforeEach(() => {
-        // Injetamos o nosso HTML no corpo do documento global do Jest
-        // Pegamos apenas o que está dentro do body para evitar conflitos de tag <html>
-        const bodyContent = html.match(/<body>([\s\S]*)<\/body>/i)[1];
-        document.body.innerHTML = bodyContent;
+        const dom = new JSDOM(html);
+        global.window = dom.window;
+        global.document = dom.window.document;
+        
+        // Mock do fetch global
+        global.fetch = jest.fn();
 
-        // Limpa o cache e carrega o seu app.js
         jest.resetModules();
         app = require('../src/app.js');
     });
 
-    test('updateState("loading") deve mostrar apenas o loading e esconder os outros', () => {
-        app.updateState('loading');
+    test('fetchRepository deve preencher os dados em caso de sucesso', async () => {
+        // Mock de uma resposta da API do GitHub
+        const mockRepo = {
+            name: 'Repo-Teste',
+            description: 'Descrição de teste',
+            stargazers_count: 10,
+            forks_count: 5,
+            open_issues_count: 2
+        };
 
-        const loading = document.getElementById('state-loading');
-        const empty = document.getElementById('state-empty');
+        global.fetch.mockResolvedValue({
+            ok: true,
+            json: async () => ({ items: [mockRepo] })
+        });
 
-        expect(loading.classList.contains('hidden')).toBe(false);
-        expect(empty.classList.contains('hidden')).toBe(true);
+        // Simulamos a seleção de uma linguagem
+        document.getElementById('language-select').value = 'javascript';
+
+        await app.fetchRepository();
+
+        expect(document.getElementById('repo-name').textContent).toBe('Repo-Teste');
+        expect(document.getElementById('state-success').classList.contains('hidden')).toBe(false);
     });
 
-    test('updateState("error") deve mostrar apenas o erro', () => {
-        app.updateState('error');
-        const error = document.getElementById('state-error');
-        expect(error.classList.contains('hidden')).toBe(false);
+    test('fetchRepository deve mostrar estado de erro se a API falhar', async () => {
+        global.fetch.mockRejectedValue(new Error('Falha na rede'));
+        
+        document.getElementById('language-select').value = 'javascript';
+
+        await app.fetchRepository();
+
+        expect(document.getElementById('state-error').classList.contains('hidden')).toBe(false);
     });
 });

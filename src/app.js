@@ -1,25 +1,6 @@
 /**
- * TODO 1: Selecionar os elementos do DOM.
- * Você vai precisar de:
- * - Os 4 containers de estado: state-empty, state-loading, state-error, state-success.
- * - O botão de busca: search-btn.
- * - O select de linguagem: language-select.
- * 
- * Dica: Use document.getElementById('id-do-elemento')
- */
-
-// Escreva aqui as variáveis (ex: const stateEmpty = ...)
-
-
-/**
  * TODO 2: Criar a função updateState(state)
- * Essa função deve:
- * 1. Receber uma string 'empty', 'loading', 'error' ou 'success'.
- * 2. Esconder todos os 4 containers (adicionando a classe 'hidden').
- * 3. Mostrar apenas o container solicitado (removendo a classe 'hidden').
- * 
- * Dica: Você pode fazer isso com vários 'if' ou de uma forma mais 
- * elegante usando um array/objeto e um loop.
+ * (Você já fez esta parte e ela está ótima!)
  */
 function updateState(state) {
     const states = {
@@ -29,24 +10,39 @@ function updateState(state) {
         'success': document.getElementById('state-success')
     };
 
-    // Esconde todos os containers 
     for (let key in states) {
         const element = states[key];
-        if (element) {
-            element.classList.add('hidden');
-        }
+        if (element) element.classList.add('hidden');
     }
     
-    // Mostra o container solicitado
     if (states[state]) {
         states[state].classList.remove('hidden');
     }
-    
+}
+
+/**
+ * TODO 3: Criar a função fetchRepository()
+ * Essa função deve ser ASSÍNCRONA (async).
+ * 
+ * Passos sugeridos:
+ * 1. Pegar o valor da linguagem selecionada no dropdown.
+ * 2. Se não houver linguagem, não faz nada.
+ * 3. Chamar updateState('loading').
+ * 4. Usar o 'fetch' com a URL da API (use template string com a linguagem).
+ * 5. Se a resposta for OK (res.ok):
+ *    - Converter para JSON.
+ *    - Sortear um repositório da lista (Math.random).
+ *    - Preencher os dados no HTML (repo-name, repo-description, etc).
+ *    - Chamar updateState('success').
+ * 6. Se der erro (catch):
+ *    - Chamar updateState('error').
+ */
+async function fetchRepository() {
+    // Escreva sua lógica aqui
 }
 
 
 // --- NÃO MEXA DAQUI PARA BAIXO ---
-// Isso permite que os testes funcionem no seu código
 if (typeof module !== 'undefined') {
-    module.exports = { updateState };
+    module.exports = { updateState, fetchRepository };
 }

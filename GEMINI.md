@@ -13,13 +13,15 @@ Buscador aleatório de repositórios do GitHub filtrado por linguagem de program
 ## 🗺️ Mapa de Arquivos
 - `/`
   - `index.html` — Estrutura da página
-  - `requirements.md` — Raciocínio computacional (Git)
-  - `GEMINI.md` — Este mapa (Git)
+  - `GEMINI.md` — Este mapa (Ignorado)
   - `JARVIS.md` — Preferências (Ignorado)
   - `package.json` — Dependências e scripts
 - `src/`
   - `style.css` — Estilização
   - `app.js` — Lógica principal
+- `docs/`
+  - `REQUIREMENTS.md` — Raciocínio computacional (Git)
+  - `study/` — Materiais de estudo
 - `tests/`
   - `dom.test.js` — Testes de estrutura
   - `app.test.js` — Testes de lógica de estado
