@@ -1,0 +1,20 @@
+{
+  "name": "github-random-repository",
+  "version": "1.0.0",
+  "description": "Um buscador aleatório de repositórios do GitHub por linguagem de programação.",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "jest": {
+    "testEnvironment": "jsdom"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "jest": "^30.4.2",
+    "jest-environment-jsdom": "^30.4.1"
+  }
+}

@@ -13,11 +13,16 @@ Buscador aleatório de repositórios do GitHub filtrado por linguagem de program
 ## 🗺️ Mapa de Arquivos
 - `/`
   - `index.html` — Estrutura da página
-  - `style.css` — Estilização
-  - `app.js` — Lógica principal
   - `requirements.md` — Raciocínio computacional (Git)
   - `GEMINI.md` — Este mapa (Git)
   - `JARVIS.md` — Preferências (Ignorado)
+  - `package.json` — Dependências e scripts
+- `src/`
+  - `style.css` — Estilização
+  - `app.js` — Lógica principal
+- `tests/`
+  - `dom.test.js` — Testes de estrutura
+  - `app.test.js` — Testes de lógica de estado
 
 ## 🚀 Fluxo de Runtime
 1. Carregamento da página (Estado: Vazio).

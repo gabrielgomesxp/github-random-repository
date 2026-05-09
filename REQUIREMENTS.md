@@ -1,6 +1,7 @@
 # requirements.md
 
 ## 📋 Enunciado
+Baseado no desafio: [https://roadmap.sh/projects/github-random-repo](https://roadmap.sh/projects/github-random-repo)
 
 Este projeto foi desenvolvido para apresentar a você o trabalho com APIs externas, o tratamento de requisições assíncronas e o gerenciamento de diferentes estados da interface usando JavaScript.
 
@@ -26,8 +27,8 @@ Após buscar um repositório com sucesso, um botão de “Atualizar” (Refresh)
 
 Aqui estão os links para os recursos que você precisará neste projeto:
 
-- API de Busca de Repositórios do GitHub ( https://docs.github.com/en/rest/reference/search#search-repositories )
-- Dados das Linguagens de Programação ( https://raw.githubusercontent.com/kamranahmedse/githunt/master/src/components/filters/language-filter/languages.json )
+- [API de Busca de Repositórios do GitHub](https://docs.github.com/en/rest/reference/search#search-repositories)
+- [Dados das Linguagens de Programação](https://raw.githubusercontent.com/kamranahmedse/githunt/master/src/components/filters/language-filter/languages.json)
 
 Este projeto ajudará você a praticar:
 

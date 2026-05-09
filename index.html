@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub Random Repository</title>
+    <link rel="stylesheet" href="src/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>GitHub Random Repo</h1>
+            <p>Encontre um repositório aleatório para estudar!</p>
+        </header>
+
+        <main>
+            <!-- Controles de Busca -->
+            <section class="controls">
+                <select id="language-select">
+                    <option value="" disabled selected>Selecione uma linguagem</option>
+                    <option value="javascript">JavaScript</option>
+                    <option value="python">Python</option>
+                    <option value="java">Java</option>
+                    <option value="typescript">TypeScript</option>
+                    <option value="csharp">C#</option>
+                </select>
+                <button id="search-btn">Buscar</button>
+            </section>
+
+            <!-- Container de Estados -->
+            <section id="display-container">
+                <!-- Estado: Vazio (Empty) -->
+                <div id="state-empty" class="state">
+                    <p>Selecione uma linguagem acima para começar.</p>
+                </div>
+
+                <!-- Estado: Carregando (Loading) -->
+                <div id="state-loading" class="state hidden">
+                    <div class="spinner"></div>
+                    <p>Loading, please wait...</p>
+                </div>
+
+                <!-- Estado: Erro (Error) -->
+                <div id="state-error" class="state hidden">
+                    <p class="error-msg">Error fetching repositories</p>
+                    <button id="retry-btn" class="btn-danger">Click to retry</button>
+                </div>
+
+                <!-- Estado: Sucesso (Success/Card) -->
+                <div id="state-success" class="state hidden">
+                    <div id="repo-card">
+                        <h2 id="repo-name">Nome do Repo</h2>
+                        <p id="repo-description">Descrição do repositório aqui...</p>
+                        <div class="repo-stats">
+                            <span>⭐ <span id="repo-stars">0</span></span>
+                            <span>🍴 <span id="repo-forks">0</span></span>
+                            <span>❗ <span id="repo-issues">0</span></span>
+                        </div>
+                    </div>
+                    <button id="refresh-btn">Atualizar</button>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script src="src/app.js"></script>
+</body>
+</html>
