@@ -1,11 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const { TextEncoder, TextDecoder } = require('util');
 
-global.TextEncoder = TextEncoder;
-global.TextDecoder = TextDecoder;
-
-const { JSDOM } = require('jsdom');
 const htmlPath = path.join(process.cwd(), 'index.html');
 const html = fs.readFileSync(htmlPath, 'utf8');
 
@@ -13,9 +8,8 @@ describe('App Logic - API Integration', () => {
     let app;
 
     beforeEach(() => {
-        const dom = new JSDOM(html);
-        global.window = dom.window;
-        global.document = dom.window.document;
+        // Injetamos o HTML diretamente no document global do Jest
+        document.body.innerHTML = html;
         
         // Mock do fetch global
         global.fetch = jest.fn();
