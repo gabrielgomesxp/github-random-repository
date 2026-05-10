@@ -26,11 +26,19 @@ A interface foi projetada para lidar com 4 estados distintos:
 - **Modularização:** Organização profissional de pastas (`src/` e `tests/`).
 - **Qualidade:** Validação da estrutura do DOM e lógica de estados via **Jest**.
 
+## 🚀 Novidades e Melhorias
+Recentemente, o projeto recebeu grandes atualizações de UX e Estética:
+- **GitHub Dark Theme:** Interface moderna e confortável inspirada no modo escuro oficial do GitHub.
+- **Links Diretos:** O nome do repositório agora é um link clicável que abre o projeto no GitHub em uma nova aba.
+- **Robustez no CI:** Integração com GitHub Actions para garantir que cada commit seja validado automaticamente.
+- **Tratamento de Rate Limit:** O sistema agora identifica e avisa quando o limite da API do GitHub é atingido.
+
 ## 🛠️ Tecnologias
-- **HTML5 / CSS3** (Flexbox & Variables)
-- **JavaScript Vanilla** (ES6+)
-- **Jest & JSDOM** (Testes Automatizados)
+- **HTML5 / CSS3** (Custom Properties & Dark Mode)
+- **JavaScript Vanilla** (Async/Await & DOM Manipulation)
+- **Jest, JSDOM & Node-Fetch** (Testes de Integração)
 - **GitHub Search API**
+- **GitHub Actions** (CI/CD)
 
 ## 🚀 Como Executar o Projeto
 

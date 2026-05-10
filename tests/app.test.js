@@ -27,6 +27,7 @@ describe('App Logic - API Integration', () => {
     test('fetchRepository deve preencher os dados em caso de sucesso', async () => {
         const mockRepo = {
             name: 'Repo-Teste',
+            html_url: 'https://github.com/teste/repo',
             description: 'Descrição de teste',
             stargazers_count: 10,
             forks_count: 5,
@@ -47,6 +48,7 @@ describe('App Logic - API Integration', () => {
 
         expect(global.fetch).toHaveBeenCalled();
         expect(document.getElementById('repo-name').textContent).toBe('Repo-Teste');
+        expect(document.getElementById('repo-link').href).toBe('https://github.com/teste/repo');
         expect(document.getElementById('state-success').classList.contains('hidden')).toBe(false);
     });
 

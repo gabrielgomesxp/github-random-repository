@@ -1,7 +1,3 @@
-/**
- * TODO 2: Criar a função updateState(state)
- * (Você já fez esta parte e ela está ótima!)
- */
 function updateState(state) {
     const states = {
         'empty': document.getElementById('state-empty'),
@@ -20,23 +16,6 @@ function updateState(state) {
     }
 }
 
-/**
- * TODO 3: Criar a função fetchRepository()
- * Essa função deve ser ASSÍNCRONA (async).
- * 
- * Passos sugeridos:
- * 1. Pegar o valor da linguagem selecionada no dropdown.
- * 2. Se não houver linguagem, não faz nada.
- * 3. Chamar updateState('loading').
- * 4. Usar o 'fetch' com a URL da API (use template string com a linguagem).
- * 5. Se a resposta for OK (res.ok):
- *    - Converter para JSON.
- *    - Sortear um repositório da lista (Math.random).
- *    - Preencher os dados no HTML (repo-name, repo-description, etc).
- *    - Chamar updateState('success').
- * 6. Se der erro (catch):
- *    - Chamar updateState('error').
- */
 async function fetchRepository() {
     const language = document.getElementById('language-select').value;
     if (!language) return;
@@ -45,17 +24,25 @@ async function fetchRepository() {
 
     try {
         const response = await fetch(`https://api.github.com/search/repositories?q=language:${language}&sort=stars&order=desc`);
-        
-        if (!response.ok) throw new Error('Erro na resposta da API');
 
-        const data = await response.json();
-        const repos = data.items;
-        
-        if (repos.length === 0) throw new Error('Nenhum repositório encontrado');
+        if (!response.ok) {
+            // Se o status for 403, provavelmente é Rate Limit da API do GitHub
+            if (response.status === 403) {
+                throw new Error('RateLimit');
+            }
+            throw new Error('Erro na resposta da API');
+        }
+
+        const data = await response.json();        const repos = data.items;
+
+        if (!repos || repos.length === 0) {
+            throw new Error('Nenhum repositório encontrado');
+        }
 
         const randomRepo = repos[Math.floor(Math.random() * repos.length)];
 
         document.getElementById('repo-name').textContent = randomRepo.name || 'N/A';
+        document.getElementById('repo-link').href = randomRepo.html_url || '#';
         document.getElementById('repo-description').textContent = randomRepo.description || 'N/A';
         document.getElementById('repo-stars').textContent = randomRepo.stargazers_count || '0';
         document.getElementById('repo-forks').textContent = randomRepo.forks_count || '0';
@@ -64,12 +51,44 @@ async function fetchRepository() {
         updateState('success');
     } catch (error) {
         console.error(error);
-        updateState('error');
+        const errorMsg = document.querySelector('.error-msg');
+        
+        if (error.message === 'Nenhum repositório encontrado') {
+            updateState('empty');
+            alert('Nenhum repositório encontrado para esta linguagem.');
+        } else if (error.message === 'RateLimit') {
+            if (errorMsg) errorMsg.textContent = 'Limite de buscas atingido. Aguarde um minuto e tente novamente.';
+            updateState('error');
+        } else {
+            if (errorMsg) errorMsg.textContent = 'Erro ao buscar repositórios. Tente novamente.';
+            updateState('error');
+        }
     }
 }
 
+/**
+ * Inicializa os Event Listeners e o estado da aplicação
+ */
+function init() {
+    const searchBtn = document.getElementById('search-btn');
+    const retryBtn = document.getElementById('retry-btn');
+    const refreshBtn = document.getElementById('refresh-btn');
+
+    if (searchBtn) searchBtn.addEventListener('click', fetchRepository);
+    if (retryBtn) retryBtn.addEventListener('click', fetchRepository);
+    if (refreshBtn) refreshBtn.addEventListener('click', fetchRepository);
+}
+
+// Inicializa o app quando o DOM estiver pronto
+if (typeof document !== 'undefined') {
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+    } else {
+        init();
+    }
+}
 
 // --- NÃO MEXA DAQUI PARA BAIXO ---
 if (typeof module !== 'undefined') {
-    module.exports = { updateState, fetchRepository };
+    module.exports = { updateState, fetchRepository, init };
 }
