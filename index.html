@@ -9,7 +9,13 @@
 <body>
     <div class="container">
         <header>
-            <h1>GitHub Random Repo</h1>
+            <div class="header-top">
+                <h1>GitHub Random Repo</h1>
+                <button id="theme-toggle" aria-label="Alternar tema">
+                    <svg id="sun-icon" class="hidden" aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" fill="currentColor"><path d="M8 12a4 4 0 1 1 0-8 4 4 0 0 1 0 8Zm0-1.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Zm5.994-2.5a.75.75 0 0 1 .75.75v.019a.75.75 0 0 1-1.5 0v-.019a.75.75 0 0 1 .75-.75Zm-11.988 0a.75.75 0 0 1 .75.75v.019a.75.75 0 0 1-1.5 0v-.019a.75.75 0 0 1 .75-.75ZM8 1.25a.75.75 0 0 1 .75.75v.019a.75.75 0 0 1-1.5 0V2a.75.75 0 0 1 .75-.75ZM8 13.25a.75.75 0 0 1 .75.75v.019a.75.75 0 0 1-1.5 0V14a.75.75 0 0 1 .75-.75ZM3.515 3.515a.75.75 0 0 1 1.06 0l.014.014a.75.75 0 0 1-1.06 1.06l-.014-.014a.75.75 0 0 1 0-1.06Zm8.91 8.91a.75.75 0 0 1 1.06 0l.014.014a.75.75 0 0 1-1.06 1.06l-.014-.014a.75.75 0 0 1 0-1.06ZM12.44 3.515a.75.75 0 0 1 0 1.06l-.014.014a.75.75 0 1 1-1.06-1.06l.014-.014a.75.75 0 0 1 1.06 0ZM3.529 12.44a.75.75 0 0 1 0 1.06l-.014.014a.75.75 0 1 1-1.06-1.06l.014-.014a.75.75 0 0 1 1.06 0Z"></path></svg>
+                    <svg id="moon-icon" aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" fill="currentColor"><path d="M9.598 1.591a.749.749 0 0 1 .785-.175 7.001 7.001 0 1 1-8.913 8.913.75.75 0 0 1 1.022-.869a6.251 6.251 0 0 0 8.874-8.874.75.75 0 0 1 .184-.785A.75.75 0 0 1 9.598 1.591Z"></path></svg>
+                </button>
+            </div>
             <p>Encontre um repositório aleatório para estudar!</p>
         </header>
 
@@ -54,9 +60,22 @@
                         </a>
                         <p id="repo-description">Descrição do repositório aqui...</p>
                         <div class="repo-stats">
-                            <span>⭐ <span id="repo-stars">0</span></span>
-                            <span>🍴 <span id="repo-forks">0</span></span>
-                            <span>❗ <span id="repo-issues">0</span></span>
+                            <span id="repo-language-container">
+                                <span class="repo-language-color"></span>
+                                <span id="repo-language">Linguagem</span>
+                            </span>
+                            <span>
+                                <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" fill="currentColor"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.751.751 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25Z"></path></svg>
+                                <span id="repo-stars">0</span>
+                            </span>
+                            <span>
+                                <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" fill="currentColor"><path d="M5 5.372v.878c0 .414.336.75.75.75h4.5a.75.75 0 0 0 .75-.75v-.878a2.25 2.25 0 1 1 1.5 0v.878a2.25 2.25 0 0 1-2.25 2.25h-1.5v2.128a2.251 2.251 0 1 1-1.5 0V8.5h-1.5A2.25 2.25 0 0 1 3.5 6.25v-.878a2.25 2.25 0 1 1 1.5 0ZM5 3.25a.75.75 0 1 0-1.5 0 .75.75 0 0 0 1.5 0Zm6.75.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm-3 10a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Z"></path></svg>
+                                <span id="repo-forks">0</span>
+                            </span>
+                            <span>
+                                <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" fill="currentColor"><path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Z"></path><path d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0ZM1.5 8a6.5 6.5 0 1 0 13 0 6.5 6.5 0 0 0-13 0Z"></path></svg>
+                                <span id="repo-issues">0</span>
+                            </span>
                         </div>
                     </div>
                     <button id="refresh-btn">Atualizar</button>
