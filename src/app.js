@@ -38,7 +38,42 @@ function updateState(state) {
  *    - Chamar updateState('error').
  */
 async function fetchRepository() {
-    // Escreva sua lógica aqui
+    console.log('--- DEBUG: fetchRepository iniciada ---');
+    console.log('--- DEBUG: fetch type:', typeof fetch);
+    
+    const language = document.getElementById('language-select').value;
+    if (!language) {
+        console.log('--- DEBUG: Nenhuma linguagem selecionada ---');
+        return;
+    }
+
+    updateState('loading');
+
+    try {
+        console.log('--- DEBUG: Chamando fetch... ---');
+        const response = await fetch(`https://api.github.com/search/repositories?q=language:${language}&sort=stars&order=desc`);
+        console.log('--- DEBUG: fetch respondeu status:', response.status);
+        
+        if (!response.ok) throw new Error('Erro na resposta da API');
+
+        const data = await response.json();
+        const repos = data.items;
+        
+        if (repos.length === 0) throw new Error('Nenhum repositório encontrado');
+
+        const randomRepo = repos[Math.floor(Math.random() * repos.length)];
+
+        document.getElementById('repo-name').textContent = randomRepo.name || 'N/A';
+        document.getElementById('repo-description').textContent = randomRepo.description || 'N/A';
+        document.getElementById('repo-stars').textContent = randomRepo.stargazers_count || '0';
+        document.getElementById('repo-forks').textContent = randomRepo.forks_count || '0';
+        document.getElementById('repo-issues').textContent = randomRepo.open_issues_count || '0';
+
+        updateState('success');
+    } catch (error) {
+        console.error(error);
+        updateState('error');
+    }
 }
 
 
