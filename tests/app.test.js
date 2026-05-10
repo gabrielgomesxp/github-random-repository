@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const fetch = require('node-fetch');
 
 const htmlPath = path.join(process.cwd(), 'index.html');
 const html = fs.readFileSync(htmlPath, 'utf8');
@@ -12,19 +13,18 @@ describe('App Logic - API Integration', () => {
         jest.resetModules();
         document.body.innerHTML = html;
         
-        // Mock robusto do fetch (garante que window.fetch e global.fetch sejam o mesmo)
+        // Mock robusto do fetch usando polyfill
         const fetchMock = jest.fn();
         global.fetch = fetchMock;
         window.fetch = fetchMock;
 
-        // Isolamos o carregamento do módulo para garantir que ele pegue o novo DOM
+        // Isolamos o carregamento do módulo
         jest.isolateModules(() => {
             app = require('../src/app.js');
         });
     });
 
     test('fetchRepository deve preencher os dados em caso de sucesso', async () => {
-        // Mock de uma resposta da API do GitHub
         const mockRepo = {
             name: 'Repo-Teste',
             description: 'Descrição de teste',
@@ -38,11 +38,14 @@ describe('App Logic - API Integration', () => {
             json: async () => ({ items: [mockRepo] })
         });
 
-        // Simulamos a seleção de uma linguagem
         document.getElementById('language-select').value = 'javascript';
 
         await app.fetchRepository();
 
+        // Aguarda microtasks (promessas) resolverem
+        await new Promise(resolve => setTimeout(resolve, 0));
+
+        expect(global.fetch).toHaveBeenCalled();
         expect(document.getElementById('repo-name').textContent).toBe('Repo-Teste');
         expect(document.getElementById('state-success').classList.contains('hidden')).toBe(false);
     });
