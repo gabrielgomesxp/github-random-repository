@@ -8,14 +8,17 @@ describe('App Logic - API Integration', () => {
     let app;
 
     beforeEach(() => {
-        // Injetamos o HTML diretamente no document global do Jest
+        // Limpamos o cache de módulos e o DOM
+        jest.resetModules();
         document.body.innerHTML = html;
         
         // Mock do fetch global
         global.fetch = jest.fn();
 
-        jest.resetModules();
-        app = require('../src/app.js');
+        // Isolamos o carregamento do módulo para garantir que ele pegue o novo DOM
+        jest.isolateModules(() => {
+            app = require('../src/app.js');
+        });
     });
 
     test('fetchRepository deve preencher os dados em caso de sucesso', async () => {
