@@ -12,8 +12,10 @@ describe('App Logic - API Integration', () => {
         jest.resetModules();
         document.body.innerHTML = html;
         
-        // Mock do fetch global
-        global.fetch = jest.fn();
+        // Mock robusto do fetch (garante que window.fetch e global.fetch sejam o mesmo)
+        const fetchMock = jest.fn();
+        global.fetch = fetchMock;
+        window.fetch = fetchMock;
 
         // Isolamos o carregamento do módulo para garantir que ele pegue o novo DOM
         jest.isolateModules(() => {
