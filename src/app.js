@@ -38,21 +38,13 @@ function updateState(state) {
  *    - Chamar updateState('error').
  */
 async function fetchRepository() {
-    console.log('--- DEBUG: fetchRepository iniciada ---');
-    console.log('--- DEBUG: fetch type:', typeof fetch);
-    
     const language = document.getElementById('language-select').value;
-    if (!language) {
-        console.log('--- DEBUG: Nenhuma linguagem selecionada ---');
-        return;
-    }
+    if (!language) return;
 
     updateState('loading');
 
     try {
-        console.log('--- DEBUG: Chamando fetch... ---');
         const response = await fetch(`https://api.github.com/search/repositories?q=language:${language}&sort=stars&order=desc`);
-        console.log('--- DEBUG: fetch respondeu status:', response.status);
         
         if (!response.ok) throw new Error('Erro na resposta da API');
 
